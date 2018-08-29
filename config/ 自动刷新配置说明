@@ -1,0 +1,5 @@
+1：添加spring-cloud-starter-bus-amqp依赖，引入spring cloud bus
+2：访问config server刷新配置端点【POST】：http://127.0.0.1:9100/actuator/bus-refresh
+3：要暴露bus-refresh端点
+4：动态更新的配置类需要添加【@RefreshScope】注解
+5：在Git服务器上设置webhooks地址：http://89c640bd.ngrok.io/actuator/bus-refresh

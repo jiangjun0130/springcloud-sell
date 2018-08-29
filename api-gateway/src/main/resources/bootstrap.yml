@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config
+      profile: dev
+      label: master
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+
+server:
+  port: 9200
+
+
+
+#zuul:
+#  routes:
+#    product:
+#      path: /myProduct/**
+#      serviceId: product
+#      # 不过滤cookie等敏感信息
+#      sensitiveHeaders:
+#    # 如果只配置path、serviceId有如下简洁写法
+##    product: /myProduct/**
+#  ignored-patterns:
+###    - /myProduct/product/list
+###    - /product/product/list
+#    - /**/product/listForOrder
+#
+#
+## https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.0-Migration-Guide#endpoints
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+# VM options: -Dserver.port=9200

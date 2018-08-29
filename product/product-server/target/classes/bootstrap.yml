@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: product
+  datasource:
+    url:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config
+      profile: dev
+      label: master
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  sleuth:
+    sampler:
+      probability: 1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+
+server:
+  port: 8900
+
+logging:
+  level:
+    org.springframework.cloud.netflix.feign: debug

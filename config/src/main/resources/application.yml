@@ -1,0 +1,25 @@
+server:
+  port: 9100
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/,http://peer2:8762/eureka/
+
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/jjfly.net/springcloud-sell-config-repo
+          username: 1137829446@qq.com
+          password: jj19900130
+          basedir: /Users/Apple/Desktop/git/springcloud-sell/config/basedir
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

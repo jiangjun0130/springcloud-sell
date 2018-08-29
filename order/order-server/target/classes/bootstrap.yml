@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: order
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config
+      profile: test
+      label: master
+    stream:
+      bindings:
+        myMessageInput:
+          group: order
+          content-type: application/json
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  sleuth:
+    sampler:
+      probability: 1.0 # Set the sampling ratio to 1, which is all required. The default is 0.1
+    web:
+      client:
+        enabled: true
+
+# 超时配置：配置的方式
+hystrix:
+  commnad:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+    # 单独为某个方法设置超时时间
+    getProductInfoList:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+# feign中使用hystrix需要此配置
+feign:
+  hystrix:
+    enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    org.springframework.cloud.netflix.feign: debug
+
+
+
+  # docker run -d --hostname my-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3.7.3-management
+  # docker run -d -p 6379:6379 redis:4.0.8
+
+  # 注意点：
+# 1：spring boot启动后，需首先拉去配置文件，所以配置文件名称需为boostrap.yml
+# 2：config server在获取指定的配置文件时，会有如下情况：
+  # Adding property source: file:/Users/Apple/Desktop/git/springcloud-sell/config/basedir/order-test.yml
+  # Adding property source: file:/Users/Apple/Desktop/git/springcloud-sell/config/basedir/order.yml
+# 会对上面两个配置文件进行合并，所以可以将共同的配置放到order.yml中。
+# 3：如果eureka的配置不是默认的，会到默认的8888端口进行获取。所以需要将eureka配置放到当前配置文件中
